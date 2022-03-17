@@ -88,6 +88,20 @@ static void ax25_kill_by_device(struct net_device *dev)
 again:
 	ax25_for_each(s, &ax25_list) {
 		if (s->ax25_dev == ax25_dev) {
+<<<<<<< HEAD
+=======
+			sk = s->sk;
+			if (!sk) {
+				spin_unlock_bh(&ax25_list_lock);
+				s->ax25_dev = NULL;
+				ax25_disconnect(s, ENETUNREACH);
+				spin_lock_bh(&ax25_list_lock);
+				goto again;
+			}
+			sock_hold(sk);
+			spin_unlock_bh(&ax25_list_lock);
+			lock_sock(sk);
+>>>>>>> 5d9629eece0a (Merge branch 'android-4.9-q' of https://android.googlesource.com/kernel/common into twelve)
 			s->ax25_dev = NULL;
 			spin_unlock_bh(&ax25_list_lock);
 			ax25_disconnect(s, ENETUNREACH);

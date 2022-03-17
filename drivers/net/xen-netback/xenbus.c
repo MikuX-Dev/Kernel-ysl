@@ -1038,7 +1038,11 @@ static void connect(struct backend_info *be)
 	xenvif_carrier_on(be->vif);
 
 	unregister_hotplug_status_watch(be);
+<<<<<<< HEAD
 	err = xenbus_watch_pathfmt(dev, &be->hotplug_status_watch,
+=======
+	err = xenbus_watch_pathfmt(dev, &be->hotplug_status_watch, NULL,
+>>>>>>> 5d9629eece0a (Merge branch 'android-4.9-q' of https://android.googlesource.com/kernel/common into twelve)
 				   hotplug_status_changed,
 				   "%s/%s", dev->nodename, "hotplug-status");
 	if (!err)

@@ -1,6 +1,10 @@
 VERSION = 4
 PATCHLEVEL = 9
+<<<<<<< HEAD
 SUBLEVEL = 235
+=======
+SUBLEVEL = 307
+>>>>>>> 5d9629eece0a (Merge branch 'android-4.9-q' of https://android.googlesource.com/kernel/common into twelve)
 EXTRAVERSION =
 NAME = Roaring Lionus
 
