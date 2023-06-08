@@ -18,13 +18,10 @@ jobs:
           git config --global user.name "MikuX-Dev"
           git config --global user.email "abinishanth3464@gmail.com"
     
-      - name: Fetch source repository
+      - name: Fetch and push 
         run: |
           git remote add source https://github.com/Project-Mikasa/kernel_xiaomi_ysl.git
           git fetch source
-          
-      - name: Push mikasa branch to target repository
-        run: |
           git remote add target https://github.com/MikuX-Dev/Kernel-ysl.git
           git pull target main
           git push target refs/remotes/source/mikasa:refs/heads/target/main
