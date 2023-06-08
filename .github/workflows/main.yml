@@ -12,25 +12,38 @@ jobs:
     steps:
       - name: Checkout my repo
         uses: actions/checkout@v2
-        with:
-          repository: MikuX-Dev/Kernel-ysl
-          token: ${{ secrets.PAT_TOKEN }}
-          ref: main
 
       - name: Configure Git
         run: |
           git config user.name "MikuX-Dev"
           git config user.email "abinishanth3464@gmail.com"
 
-      - name: Import repository
+      - name: Clone the repository
+        run: git clone https://github.com/Project-Mikasa/kernel_xiaomi_ysl.git temp_repo
+
+      - name: Navigate to the cloned repository
+        run: cd temp_repo
+
+      - name: Switch to the 'mikasa' branch
+        run: git checkout mikasa
+
+      - name: Configure remote repository
         run: |
-          git clone https://github.com/Project-Mikasa/kernel_xiaomi_ysl.git temp_repo
-          cd temp_repo
-          git checkout mikasa
-          git remote -v 
-          git remote remove origin 
+          git remote -v
+          git remote remove origin
           git remote add origin https://github.com/MikuX-Dev/Kernel-ysl.git
-          git push origin 
+
+      - name: Set up PAT
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          echo "machine github.com login YourUsername password $PAT_TOKEN" > ~/.netrc
+          chmod 600 ~/.netrc
+
+      - name: Fetch and push the 'mikasa' branch
+        run: |
+          git fetch origin mikasa
+          git push origin mikasa
 
       - name: Cleanup
         run: |
