@@ -13,7 +13,7 @@ jobs:
       - name: Checkout my repo
         uses: actions/checkout@v2
         with:
-          repository: MikuX-Dev/kernel_xiaomi_ysl_mikasa-v2.0
+          repository: MikuX-Dev/Kernel-ysl
           token: ${{ secrets.PAT_TOKEN }}
           ref: main
 
