@@ -1,4 +1,4 @@
-name: Import Repo and Push
+name: Push Branch
 
 on:
   push:
@@ -6,46 +6,23 @@ on:
       - main
 
 jobs:
-  import_and_push:
+  pushBranch:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout my repo
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Configure Git
+      - name: Clone source repository
+        run: git clone --branch mikasa https://github.com/Project-Mikasa/kernel_xiaomi_ysl.git
+      
+      - name: Set up Git user
         run: |
-          git config user.name "MikuX-Dev"
-          git config user.email "abinishanth3464@gmail.com"
-
-      - name: Clone the repository
-        run: git clone https://github.com/Project-Mikasa/kernel_xiaomi_ysl.git temp_repo
-
-      - name: Navigate to the cloned repository
-        run: cd temp_repo
-
-      - name: Switch to the 'mikasa' branch
-        run: git checkout mikasa
-
-      - name: Configure remote repository
+          git config --global user.name "MikuX-Dev"
+          git config --global user.email "abinishanth3464@gmail.com"
+      
+      - name: Push branch to target repository
         run: |
-          git remote -v
-          git remote remove origin
-          git remote add origin https://github.com/MikuX-Dev/Kernel-ysl.git
-
-      - name: Set up PAT
-        env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-        run: |
-          echo "machine github.com login YourUsername password $PAT_TOKEN" > ~/.netrc
-          chmod 600 ~/.netrc
-
-      - name: Fetch and push the 'mikasa' branch
-        run: |
-          git fetch origin mikasa
-          git push origin mikasa
-
-      - name: Cleanup
-        run: |
-          cd ..
-          rm -rf temp_repo
+          cd kernel_xiaomi_ysl
+          git remote set-url origin https://github.com/MikuX-Dev/Kernel-ysl.git
+          git push --mirror https://$PAT_TOKEN@github.com/MikuX-Dev/Kernel-ysl.git
