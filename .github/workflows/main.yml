@@ -27,4 +27,4 @@ jobs:
           cd temp_repo
           git checkout mikasa
           git remote set-url upstream https://github.com/MikuX-Dev/Kernel-ysl.git
-          git push --mirror upstream/main
+          git push --mirror upstream/main 
