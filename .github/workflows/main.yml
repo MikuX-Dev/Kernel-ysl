@@ -27,4 +27,4 @@ jobs:
         run: |
           git remote add target https://github.com/MikuX-Dev/Kernel-ysl.git
           git pull target main
-          git push target source/mikasa:target/main
+          git push target refs/remotes/source/mikasa:refs/heads/target/main
