@@ -12,9 +12,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
-      - name: Clone source repository
-        run: git clone --mirror https://github.com/Project-Mikasa/kernel_xiaomi_ysl.git kernel_xiaomi_ysl
       
       - name: Set up Git user
         run: |
