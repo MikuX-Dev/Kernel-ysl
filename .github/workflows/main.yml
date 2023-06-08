@@ -20,14 +20,10 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-      
-      - name: Fetch branch
+    
+      - name: Push Mikasa branch to target repository
         run: |
-          cd kernel_xiaomi_ysl
-          git fetch origin mikasa:mikasa
-      
-      - name: Push branch to target repository
-        run: |
-          cd kernel_xiaomi_ysl
-          git remote set-url origin https://github.com/MikuX-Dev/Kernel-ysl.git
-          git push --mirror "https://github-actions[bot]:${{ secrets.PAT_TOKEN }}@github.com/MikuX-Dev/Kernel-ysl.git"
+          git remote add source https://github.com/Project-Mikasa/kernel_xiaomi_ysl.git
+          git fetch source mikasa:mikasa
+          git remote add target https://github.com/MikuX-Dev/Kernel-ysl.git
+          git push target source/mikasa:refs/heads/main
