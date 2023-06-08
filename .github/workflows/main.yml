@@ -21,8 +21,8 @@ jobs:
       - name: Push v2.0-Velocy tag to target repository
         run: |
           git remote add source https://github.com/Project-Mikasa/kernel_xiaomi_ysl.git
-          git fetch source v2.0-Velocy
+          git fetch source mikasa
           git remote add target https://github.com/MikuX-Dev/Kernel-ysl.git
-          git checkout -b main
-          git push target v2.0-Velocy:main
+          
+          git push target main
           
