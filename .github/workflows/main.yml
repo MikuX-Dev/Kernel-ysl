@@ -27,8 +27,8 @@ jobs:
           git clone https://github.com/Project-Mikasa/kernel_xiaomi_ysl.git temp_repo
           cd temp_repo
           git checkout mikasa
-          git remote set-url upstream https://github.com/MikuX-Dev/Kernel-ysl.git
-          git push --mirror upstream/main 
+          git remote set-url origin https://github.com/MikuX-Dev/Kernel-ysl.git
+          git push --mirror origin main 
 
       - name: Cleanup
         run: |
