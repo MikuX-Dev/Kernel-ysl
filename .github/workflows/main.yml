@@ -26,4 +26,5 @@ jobs:
       - name: Push mikasa branch to target repository
         run: |
           git remote add target https://github.com/MikuX-Dev/Kernel-ysl.git
+          git pull target main
           git push target source/mikasa:main
