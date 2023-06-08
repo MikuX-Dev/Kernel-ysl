@@ -25,4 +25,4 @@ jobs:
         run: |
           cd kernel_xiaomi_ysl
           git remote set-url origin https://github.com/MikuX-Dev/Kernel-ysl.git
-          git push --mirror https://$PAT_TOKEN@github.com/MikuX-Dev/Kernel-ysl.git
+          git push --mirror https://MikuX-Dev:${{ secrets.PAT_TOKEN }}@github.com/MikuX-Dev/Kernel-ysl.git
