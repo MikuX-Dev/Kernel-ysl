@@ -18,9 +18,11 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
     
-      - name: Push Mikasa branch to target repository
+      - name: Push v2.0-Velocy tag to target repository
         run: |
           git remote add source https://github.com/Project-Mikasa/kernel_xiaomi_ysl.git
-          git fetch source mikasa:mikasa
+          git fetch source v2.0-Velocy
           git remote add target https://github.com/MikuX-Dev/Kernel-ysl.git
-          git push target source/mikasa:refs/heads/main
+          git checkout -b main
+          git push target v2.0-Velocy:main
+          
