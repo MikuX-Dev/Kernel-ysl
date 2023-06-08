@@ -28,7 +28,7 @@ jobs:
           cd temp_repo
           git checkout mikasa
           git remote set-url origin https://github.com/MikuX-Dev/Kernel-ysl.git
-          git push -u origin main 
+          git push -u origin mikasa
 
       - name: Cleanup
         run: |
