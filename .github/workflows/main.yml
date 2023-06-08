@@ -1,4 +1,4 @@
-name: Push Branch
+name: Mirror and Push Branch
 
 on:
   push:
@@ -6,23 +6,27 @@ on:
       - main
 
 jobs:
-  pushBranch:
+  mirrorAndPush:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Clone source repository
-        run: git clone --branch mikasa https://github.com/Project-Mikasa/kernel_xiaomi_ysl.git
+        run: git clone --mirror https://github.com/Project-Mikasa/kernel_xiaomi_ysl.git kernel_xiaomi_ysl
       
       - name: Set up Git user
         run: |
           git config --global user.name "MikuX-Dev"
           git config --global user.email "abinishanth3464@gmail.com"
       
-      - name: Push branch to target repository
+      - name: Fetch branch
         run: |
           cd kernel_xiaomi_ysl
+          git fetch origin mikasa:mikasa
+      
+      - name: Push branch to target repository
+        run: |
           git remote set-url origin https://github.com/MikuX-Dev/Kernel-ysl.git
-          git push --mirror https://MikuX-Dev:${{ secrets.PAT_TOKEN }}@github.com/MikuX-Dev/Kernel-ysl.git
+          git push --mirror "https://github.com/MikuX-Dev/Kernel-ysl.git?access_token=${{ secrets.PAT_TOKEN }}"
