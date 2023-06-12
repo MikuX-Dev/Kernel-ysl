@@ -26,14 +26,21 @@ jobs:
 
       - name: Fetch Latest Source
         run: git fetch origin
-      
+
       - name: Rebase
         run: |
-          git checkout test  # Switch to the 'main' branch of the local repository
+          git checkout main
           git rebase upstream/perf
-          python resolve_conflicts.py
-          git add .
-          git rebase --continue
+      
+      - name: Check for Conflicts
+        run: |
+          CONFLICTS=$(git diff --name-only --diff-filter=U)
+          if [[ -n "$CONFLICTS" ]]; then
+            echo "Conflicts detected. Resolving conflicts..."
+            python resolve_conflicts.py
+            git add .
+            git rebase --continue
+          fi
 
       - name: Push Changes
-        run: git push --force-with-lease origin test
+        run: git push --force-with-lease origin main
