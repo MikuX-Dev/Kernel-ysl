@@ -1,0 +1,36 @@
+name: Rebase Kernel
+on:
+  push:
+    branches:
+      - ci  # Modify this if your main branch has a different name
+
+env:
+  GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+
+jobs:
+  rebase_kernel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          repository: MikuX-Dev/Kernel-ysl
+          ref: test
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "MikuX-Dev"
+          git config --global user.email "abinishanth3464@gmail.com"
+          git remote add upstream https://github.com/Noob-214/Logan_Ysl.git
+          git fetch upstream
+
+      - name: Fetch Latest Source
+        run: git fetch origin
+      
+      - name: Rebase
+        run: |
+          git checkout test  # Switch to the 'main' branch of the local repository
+          git rebase upstream/perf
+          # Check if conflicts occurred during the rebase
+          if [[ -n $(git diff --name-only --diff-filter=U) ]]; then python resolve_conflicts.py; fi
+          git push --force-with-lease origin test
