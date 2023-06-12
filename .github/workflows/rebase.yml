@@ -2,7 +2,7 @@ name: Rebase Kernel
 on:
   push:
     branches:
-      - ci  # Modify this if your main branch has a different name
+      - CI  # Modify this if your main branch has a different name
 
 env:
   GH_TOKEN: ${{ secrets.PAT_TOKEN }}
