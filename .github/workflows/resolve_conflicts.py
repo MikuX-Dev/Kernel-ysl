@@ -1,20 +1,28 @@
-import subprocess
+import os
 
+# Function to resolve conflicts automatically
 def resolve_conflicts():
-    # Get the list of conflicted files
-    result = subprocess.run(['git', 'diff', '--name-only', '--diff-filter=U'], capture_output=True, text=True)
-    conflicted_files = result.stdout.splitlines()
-    
-    # Resolve conflicts for each file
-    for file in conflicted_files:
-        # Use Git's 'checkout --theirs' to choose the version from the branch being merged
-        subprocess.run(['git', 'checkout', '--theirs', file])
-        
-        # Add the resolved file to the staging area
-        subprocess.run(['git', 'add', file])
-        
-    # Continue with the rebase
-    subprocess.run(['git', 'rebase', '--continue'])
+    conflict_files = []
+    for root, dirs, files in os.walk('.'):
+        for file in files:
+            if file.endswith('.c') or file.endswith('.cpp'):
+                filepath = os.path.join(root, file)
+                with open(filepath, 'r+') as f:
+                    content = f.read()
+                    if '<<<<<<<' in content or '>>>>>>>' in content:
+                        conflict_files.append(filepath)
+                        f.seek(0)
+                        f.truncate()
+                        f.write(content.split('=======')[0])
 
-# Call the function to resolve conflicts
-resolve_conflicts()
+    return conflict_files
+
+# Resolve conflicts
+conflict_files = resolve_conflicts()
+
+if conflict_files:
+    print('Conflicts resolved successfully for the following files:')
+    for file in conflict_files:
+        print(file)
+else:
+    print('No conflicts found.')
