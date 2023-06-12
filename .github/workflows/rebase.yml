@@ -30,7 +30,7 @@ jobs:
       - name: Rebase
         run: |
           git checkout test
-          git rebase upstream/perf
+          git rebase upstream/perf || true  # Continue even if rebase fails
       
       - name: Check for Conflicts
         run: |
