@@ -31,6 +31,9 @@ jobs:
         run: |
           git checkout test  # Switch to the 'main' branch of the local repository
           git rebase upstream/perf
-          # Check if conflicts occurred during the rebase
-          if [[ -n $(git diff --name-only --diff-filter=U) ]]; then python resolve_conflicts.py; fi
-          git push --force-with-lease origin test
+          python resolve_conflicts.py
+          git add .
+          git rebase --continue
+
+      - name: Push Changes
+        run: git push --force-with-lease origin test
