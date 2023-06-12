@@ -29,7 +29,7 @@ jobs:
 
       - name: Rebase
         run: |
-          git checkout main
+          git checkout test
           git rebase upstream/perf
       
       - name: Check for Conflicts
@@ -43,4 +43,4 @@ jobs:
           fi
 
       - name: Push Changes
-        run: git push --force-with-lease origin main
+        run: git push --force-with-lease origin test
