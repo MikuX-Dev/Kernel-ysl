@@ -1,28 +1,31 @@
-name: Rebase Kernel
+name: merge kernel
+
 on:
   push:
     branches:
-      - Ci  # Modify this if your main branch has a different name
+      - C # Modify this if your main branch has a different name
 
 env:
   GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+  lp: logan_perf
+  lc: logan_common
+  mk: mikasa
+  cf: python3 resolve_conflicts.py
 
 jobs:
   rebase_kernel:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-        with:
-          repository: MikuX-Dev/Kernel-ysl
-          ref: test
-
       - name: Set up Git
         run: |
           git config --global user.name "MikuX-Dev"
           git config --global user.email "abinishanth3464@gmail.com"
-          git remote add upstream https://github.com/Noob-214/Logan_Ysl.git
-          git fetch upstream
+
+      - name: Clone repo
+        run: |
+          git clone https://github.com/Noob-214/Logan_Ysl.git -b $lc
+          git clone https://github.com/Noob-214/Logan_Ysl.git -b $lp
+          git clone https://github.com/Project-Mikasa/kernel_xiaomi_ysl.git -b $mk
 
       - name: Fetch Latest Source
         run: git fetch origin
