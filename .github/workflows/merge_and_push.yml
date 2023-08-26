@@ -10,6 +10,8 @@ env:
   lp: logan_perf
   lc: logan_common
   mk: mikasa
+  li: lineage-20
+  ba: 13
   cf: python3 resolve_conflicts.py
 
 jobs:
@@ -23,18 +25,17 @@ jobs:
 
       - name: Clone repo
         run: |
-          git clone https://github.com/Noob-214/Logan_Ysl.git -b $lc
-          git clone https://github.com/Noob-214/Logan_Ysl.git -b $lp
-          git clone https://github.com/Project-Mikasa/kernel_xiaomi_ysl.git -b $mk
+          git clone https://github.com/Noob-214/Logan_Ysl.git -b perf $lc
+          git clone https://github.com/Noob-214/Logan_Ysl.git -b common $lp
+          git clone https://github.com/bananadroid-devices/android_kernel_xiaomi_msm8953 -b 13 
+          git clone https://github.com/Project-Mikasa/kernel_xiaomi_ysl.git -b mikasa
+          git clone https://github.com/xiaomi-msm8953-devs/android_kernel_xiaomi_msm8953 -b lineage-20
+          git clone https://github.com/ItsVixano/android_kernel_qcom_msm8953 -b lineage-20 
+          
 
       - name: Fetch Latest Source
         run: git fetch origin
 
-      - name: Rebase
-        run: |
-          git checkout test
-          git rebase upstream/perf || true  # Continue even if rebase fails
-      
       - name: Check for Conflicts
         run: |
           CONFLICTS=$(git diff --name-only --diff-filter=U)
